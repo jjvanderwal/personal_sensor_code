@@ -1,27 +1,81 @@
 /*
- *  This sketch sends data via HTTP GET requests to data.sparkfun.com service.
- *
- *  You need to get streamId and privateKey at data.sparkfun.com and paste them
- *  below. Or just customize this script to talk to other HTTP servers.
- *
+  * drafted by Jeremy VanDerWal ( jjvanderwal@gmail.com ... www.jjvanderwal.com )
+  * GNU General Public License .. feel free to use / distribute ... no warranties
  */
 
 #include <ESP8266WiFi.h>
+#include "DHT.h"
+ 
+#define DHTPIN_0 D5     // what pin we're connected to
+#define DHTTYPE_0 DHT22   // DHT 22  (AM2302)
 
-const char* ssid     = "your-ssid";
-const char* password = "your-password";
+DHT dht_0(DHTPIN_0, DHTTYPE_0);
+ 
+//WiFi information
+const char* ssid = "NETGEAR18";
+const char* password = "FamilyJADE";
 
-const char* host = "data.sparkfun.com";
-const char* streamId   = "....................";
-const char* privateKey = "....................";
+// ThingSpeak Settings
+String APIKey = "H3OJHBYHU101EFYU";             // enter your channel's Write API Key
+const int updateThingSpeakInterval = 20 * 1000; // 20 second interval at which to update ThingSpeak
 
+// function prototypes
+void connectWiFi();
+
+// setup the start
 void setup() {
   Serial.begin(115200);
   delay(10);
+  
+  dht_0.begin();
+ 
+}
 
-  // We start by connecting to a WiFi network
+//the looping script
+void loop() {
+  //confirm the wifi is still connected
+  if (WiFi.status() != WL_CONNECTED) { 
+    connectWiFi();
+  } 
+  
+  //define the strings of sensor values
+  float h = dht_0.readHumidity();
+  float t = dht_0.readTemperature();
+  
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(h) || isnan(t)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+  
+  String S1 = String(h);
+  String S2 = String(t);
+  String postData = ("field1=" + S1 + "&field2=" + S2);
+  Serial.println(postData);
+  
+  // Update ThingSpeak
+  WiFiClient client; // use WiFiClient class to create TCP connections
+  if (client.connect("api.thingspeak.com", 80)) {
+    client.print("POST /update HTTP/1.1\n");
+    client.print("Host: api.thingspeak.com\n");
+    client.print("Connection: close\n");
+    client.print("X-THINGSPEAKAPIKEY: " + APIKey + "\n");
+    client.print("Content-Type: application/x-www-form-urlencoded\n");
+    client.print("Content-Length: ");
+    client.print(postData.length());
+    client.print("\n\n");
+    client.print(postData);
+    String line = client.readStringUntil('\r');   // read all the lines of the reply from server and print them to Serial
+    Serial.println(line);
+  }
+  client.stop();
 
-  Serial.println();
+  delay(updateThingSpeakInterval); // delay by the interval defined
+   
+}
+
+//section to start the WIFI
+void connectWiFi() {
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -37,56 +91,6 @@ void setup() {
   Serial.println("WiFi connected");  
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
-}
-
-int value = 0;
-
-void loop() {
-  delay(5000);
-  ++value;
-
-  Serial.print("connecting to ");
-  Serial.println(host);
-  
-  // Use WiFiClient class to create TCP connections
-  WiFiClient client;
-  const int httpPort = 80;
-  if (!client.connect(host, httpPort)) {
-    Serial.println("connection failed");
-    return;
-  }
-  
-  // We now create a URI for the request
-  String url = "/input/";
-  url += streamId;
-  url += "?private_key=";
-  url += privateKey;
-  url += "&value=";
-  url += value;
-  
-  Serial.print("Requesting URL: ");
-  Serial.println(url);
-  
-  // This will send the request to the server
-  client.print(String("GET ") + url + " HTTP/1.1\r\n" +
-               "Host: " + host + "\r\n" + 
-               "Connection: close\r\n\r\n");
-  int timeout = millis() + 5000;
-  while (client.available() == 0) {
-    if (timeout - millis() < 0) {
-      Serial.println(">>> Client Timeout !");
-      client.stop();
-      return;
-    }
-  }
-  
-  // Read all the lines of the reply from server and print them to Serial
-  while(client.available()){
-    String line = client.readStringUntil('\r');
-    Serial.print(line);
-  }
-  
   Serial.println();
-  Serial.println("closing connection");
 }
 
