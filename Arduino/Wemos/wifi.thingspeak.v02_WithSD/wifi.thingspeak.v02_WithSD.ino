@@ -8,6 +8,8 @@
 #include "SparkFunTSL2561.h"
 #include "SFE_BMP180.h"
 #include "Wire.h"
+#include "SD.h"
+#include "SPI.h"
 
 //define and initialize some of the pins/types 
 #define DHTPIN_0 D3               // what pin we're connected to
