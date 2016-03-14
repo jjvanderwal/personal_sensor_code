@@ -29,7 +29,7 @@ const char* ssid = "SSID HERE";         //set the wifi id
 const char* password = "PASSWORD";    //define the wifi password
 
 // ThingSpeak Settings
-String APIKey = "API HERE";             // enter your channel's Write API Key
+String APIKey = "W7Z3IMG6G348F55S";             // enter your channel's Write API Key
 const int updateThingSpeakInterval = 30 * 1000; // 50 second interval at which to update ThingSpeak
 
 // function prototypes
