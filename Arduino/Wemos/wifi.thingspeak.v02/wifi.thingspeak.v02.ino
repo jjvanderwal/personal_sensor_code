@@ -20,12 +20,12 @@ SFE_BMP180 pressure;              //create an SFE_BMP180 object, here called "pr
 
  
 //WiFi information
-const char* ssid = "NETGEAR18";         //set the wifi id
-const char* password = "FamilyJADE";    //define the wifi password
+const char* ssid = "TEHS_297D59";         //set the wifi id
+const char* password = "8847C9C512";    //define the wifi password
 
 // ThingSpeak Settings
 String APIKey = "H3OJHBYHU101EFYU";             // enter your channel's Write API Key
-const int updateThingSpeakInterval = 50 * 1000; // 50 second interval at which to update ThingSpeak
+const int updateThingSpeakInterval = 15 * 1000; // 50 second interval at which to update ThingSpeak
 
 // function prototypes
 void connectWiFi();
