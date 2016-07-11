@@ -26,7 +26,7 @@ Battery battery;                        //initialize the battery
 
 // Variable Setup
 int deviceCount;                        //this is for a device count
-int updateInterval = 54000;             //set the update interval to 60 seconds
+unsigned long updateInterval = 54000;   //set the update interval to 60 seconds
 int responseCode;                       //define the responsecode for joining the lora network
   
 // setup the start
@@ -69,7 +69,11 @@ void loop() {
   char postDataChar[100];
   postData.toCharArray(postDataChar,99);
   responseCode = mdot.sendPairs(postDataChar);
+
+  debugSerial.println("posted");
       
   delay(updateInterval); // delay to let things reset
+
+  debugSerial.println("delay done");
 }
 
