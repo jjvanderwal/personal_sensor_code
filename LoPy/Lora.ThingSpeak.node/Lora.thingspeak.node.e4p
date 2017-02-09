@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Project SYSTEM "Project-5.1.dtd">
+<!-- Pymakr project file for project Lora.thingspeak.node -->
+<!-- Saved: 2017-02-05, 19:53:37 -->
+<!-- Copyright (C) 2017 0.1, 0.1 -->
+<Project version="5.1">
+  <Language>en_US</Language>
+  <Hash>da9a8ecfdf4ed6629cb4620db6ec8a2659136ba1</Hash>
+  <ProgLanguage mixed="0">Python3</ProgLanguage>
+  <ProjectType>Python</ProjectType>
+  <Description></Description>
+  <Version>0.1</Version>
+  <Author>0.1</Author>
+  <Email>0.1</Email>
+  <Eol index="1"/>
+  <Sources>
+    <Source>__init__.py</Source>
+    <Source>boot.py</Source>
+    <Source>main.py</Source>
+  </Sources>
+  <Forms/>
+  <Translations/>
+  <Resources/>
+  <Interfaces/>
+  <Others>
+    <Other>0.1</Other>
+  </Others>
+  <MainScript>0.1</MainScript>
+  <Vcs>
+    <VcsType>None</VcsType>
+  </Vcs>
+  <FiletypeAssociations>
+    <FiletypeAssociation pattern="*.idl" type="INTERFACES"/>
+    <FiletypeAssociation pattern="*.py" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.py3" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.pyw" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.pyw3" type="SOURCES"/>
+  </FiletypeAssociations>
+</Project>

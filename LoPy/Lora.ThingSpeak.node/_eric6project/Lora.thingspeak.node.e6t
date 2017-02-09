@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Tasks SYSTEM "Tasks-6.0.dtd">
+<!-- Pymakr tasks file for project Lora.thingspeak.node -->
+<!-- Saved: 2017-02-05, 20:09:20 -->
+<Tasks version="6.0">
+  <ProjectScanFilter></ProjectScanFilter>
+  <Task priority="1" completed="False" type="3" uid="{53c94e48-4ed1-46fa-9fb2-de46c82864b9}">
+    <Summary>NOTE: For this demo the device does an infinite loop for while waiting the response. Introduce a max_time_waiting for you application</Summary>
+    <Description></Description>
+    <Created>2017-02-05, 20:08:52</Created>
+    <Resource>
+      <Filename>main.py</Filename>
+      <Linenumber>24</Linenumber>
+    </Resource>
+  </Task>
+</Tasks>
